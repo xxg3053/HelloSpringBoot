@@ -1,5 +1,7 @@
-package com.kenfo.demo;
+package com.kenfo.demo.service;
 
+import com.kenfo.demo.domain.Girl;
+import com.kenfo.demo.repository.GirlRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

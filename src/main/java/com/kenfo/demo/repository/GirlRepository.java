@@ -1,5 +1,6 @@
-package com.kenfo.demo;
+package com.kenfo.demo.repository;
 
+import com.kenfo.demo.domain.Girl;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

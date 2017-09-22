@@ -1,5 +1,8 @@
-package com.kenfo.demo;
+package com.kenfo.demo.controller;
 
+import com.kenfo.demo.domain.Girl;
+import com.kenfo.demo.repository.GirlRepository;
+import com.kenfo.demo.service.GirlService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

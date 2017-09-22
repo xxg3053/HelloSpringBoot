@@ -1,4 +1,4 @@
-package com.kenfo.demo;
+package com.kenfo.demo.domain;
 
 import javax.persistence.Entity;
 
