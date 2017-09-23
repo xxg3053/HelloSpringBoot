@@ -1,11 +1,17 @@
 package com.kenfo.demo.controller;
 
 import com.kenfo.demo.domain.Girl;
+import com.kenfo.demo.domain.Result;
 import com.kenfo.demo.repository.GirlRepository;
 import com.kenfo.demo.service.GirlService;
+import com.kenfo.demo.utils.ResultUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -13,6 +19,9 @@ import java.util.List;
  */
 @RestController
 public class GirlController {
+
+    private final static Logger logger = LoggerFactory.getLogger(GirlController.class);
+
     @Autowired
     private GirlRepository girlRepository;
     @Autowired
@@ -23,22 +32,23 @@ public class GirlController {
      */
     @GetMapping(value = "/girls")
     public List<Girl> girlList(){
+        logger.info("获取女生列表");
         return girlRepository.findAll();
     }
 
     /**
      * 添加一个女生
-     * @param cupSize
-     * @param age
      * @return
      */
     @PostMapping(value = "/girls")
-    public Girl girlAdd(@RequestParam("cupSize") String cupSize,
-                          @RequestParam("age") Integer age){
-        Girl girl = new Girl();
-        girl.setCupSize(cupSize);
-        girl.setAge(age);
-        return girlRepository.save(girl);
+    public Result<Girl> girlAdd(@Valid Girl girl, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            return ResultUtil.error(1,bindingResult.getFieldError().getDefaultMessage());
+        }
+        girl.setCupSize(girl.getCupSize());
+        girl.setAge(girl.getAge());
+
+        return ResultUtil.success(girlRepository.save(girl));
     }
 
     /**
@@ -87,5 +97,10 @@ public class GirlController {
     @PostMapping(value = "/girls/two")
     public void girlTwo(){
         girlService.insertTwo();
+    }
+
+    @GetMapping(value = "/girls/getAge/{id}")
+    public void getAge(@PathVariable("id") Integer id) throws Exception{
+        girlService.getAge(id);
     }
 }
